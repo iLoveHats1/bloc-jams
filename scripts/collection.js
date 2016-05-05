@@ -15,7 +15,7 @@ var buildCollectionItemTemplate = function(){
    + '</div>'
    ;
 
-   returb $(template);
+   return $(template);
 };
 
 $(window).load(function() {
