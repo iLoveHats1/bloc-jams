@@ -144,17 +144,6 @@ var nextSong = function() {
     currentSoundFile.play();
     updatePlayerBarSong();
 
-
-
-
-    /*currentlyPlayingSongNumber = currentSongIndex + 1;
-    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-
-    //* Update the Player Bar information
-    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
-    $('.currently-playing .artist-name').text(currentAlbum.artist);
-    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
-    $('.main-controls .play-pause').html(playerBarPauseButton); */
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
     var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
@@ -182,16 +171,7 @@ var previousSong = function() {
     setSong(currentSongIndex + 1);
     currentSoundFile.play();
     updatePlayerBarSong();
-
-    /*
-    currentlyPlayingSongNumber = currentSongIndex + 1;
-    currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-
-    // Update the Player Bar information
-    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
-    $('.currently-playing .artist-name').text(currentAlbum.artist);
-    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.title);
-    $('.main-controls .play-pause').html(playerBarPauseButton); */
+    
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
     var $previousSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
@@ -208,6 +188,24 @@ var updatePlayerBarSong = function() {
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
  };
+
+var togglePlayFromPlayerBar = function() {
+  if (currentSoundFile.isPaused()) {
+    $(this).html(pauseButtonTemplate);
+    $('.main-controls .play-pause').html(playerBarPauseButton);
+    
+    currentSoundFile.play();
+    
+  }
+  if (currentSoundFile) {
+    $(this).html(playButtonTemplate);
+    $('.main-controls .play-pause').html(playerBarPlayButton);
+    
+    currentSoundFile.isPaused();
+
+  }
+
+ };
  
  
 
@@ -220,13 +218,14 @@ var updatePlayerBarSong = function() {
 
  // Store state of playing songs
 
- var currentAlbum = null;
- var currentlyPlayingSongNumber = null;
- var currentSongFromAlbum = null;
- var currentSoundFile = null; 
+var currentAlbum = null;
+var currentlyPlayingSongNumber = null;
+var currentSongFromAlbum = null;
+var currentSoundFile = null; 
 
- var $previousButton = $('.main-controls .previous');
- var $nextButton = $('.main-controls .next');
+var $previousButton = $('.main-controls .previous');
+var $nextButton = $('.main-controls .next');
+var $mainControls = $('.main-controls .play-pause')
 
 var albums = [albumPicasso, albumMarconi, albumJohnson];
 var index = 1;
@@ -244,6 +243,7 @@ $(document).ready(function() {
 
   $previousButton.click(previousSong);
   $nextButton.click(nextSong);
+  $mainControls.click(togglePlayFromPlayerBar);
 });
 
 
