@@ -39,8 +39,7 @@ var createSongRow = function(songNumber, songName, songLength) {
     + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
     + '  <td class="song-item-title">' + songName + '</td>'
     + '  <td class="song-item-duration">' + songLength + '</td>'
-    + '</tr>'
-    ;
+    + '</tr>';
  
   var $row = $(template);
 
@@ -190,20 +189,23 @@ var updatePlayerBarSong = function() {
  };
 
 var togglePlayFromPlayerBar = function() {
-  if (currentSoundFile.isPaused()) {
+  var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+      currentlyPlayingCell.html(currentlyPlayingSongNumber);
+
+  if (currentSoundFile.isPaused) {
     $(this).html(pauseButtonTemplate);
     $('.main-controls .play-pause').html(playerBarPauseButton);
-    
+    updatePlayerBarSong();
     currentSoundFile.play();
     
-  }
-  if (currentSoundFile) {
+  } else if(currentSoundFile) {
+    
     $(this).html(playButtonTemplate);
     $('.main-controls .play-pause').html(playerBarPlayButton);
-    
+    updatePlayerBarSong();
     currentSoundFile.isPaused();
 
-  }
+    }
 
  };
  
@@ -245,22 +247,3 @@ $(document).ready(function() {
   $nextButton.click(nextSong);
   $mainControls.click(togglePlayFromPlayerBar);
 });
-
-
-
- 
-
-
- 
-
-
-    
-
-
-
-
-
-
-
-
-
