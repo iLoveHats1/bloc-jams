@@ -189,25 +189,25 @@ var updatePlayerBarSong = function() {
  };
 
 var togglePlayFromPlayerBar = function() {
-  var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-      currentlyPlayingCell.html(currentlyPlayingSongNumber);
+  var $currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);   
 
-  if (currentSoundFile.isPaused) {
-    $(this).html(pauseButtonTemplate);
-    $('.main-controls .play-pause').html(playerBarPauseButton);
-    updatePlayerBarSong();
+  if (currentSoundFile.isPaused()) {
+    
+    $currentlyPlayingCell.html(pauseButtonTemplate);
+    $(this).html(playerBarPauseButton);
+    
     currentSoundFile.play();
     
   } else if(currentSoundFile) {
     
-    $(this).html(playButtonTemplate);
-    $('.main-controls .play-pause').html(playerBarPlayButton);
-    updatePlayerBarSong();
-    currentSoundFile.isPaused();
+    $currentlyPlayingCell.html(playButtonTemplate);
+    $(this).html(playerBarPlayButton);
+    
+    currentSoundFile.pause();
 
-    }
+  }
 
- };
+};
  
  
 
