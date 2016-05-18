@@ -45,7 +45,7 @@ var createSongRow = function(songNumber, songName, songLength) {
     '<tr class="album-view-song-item">'
     + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
     + '  <td class="song-item-title">' + songName + '</td>'
-    + '  <td class="song-item-duration">' + songLength + '</td>'
+    + '  <td class="song-item-duration">' + (filterTimeCode(songLength)) + '</td>'
     + '</tr>';
  
   var $row = $(template);
@@ -80,9 +80,9 @@ var createSongRow = function(songNumber, songName, songLength) {
         currentSoundFile.play();
         updateSeekBarWhileSongPlays();
       } else {
-          $(this).html(playButtonTemplate);
-          $('main-controls .play-pause').html(playerBarPlayButton);
-          currentSoundFile.pause();
+        $(this).html(playButtonTemplate);
+        $('main-controls .play-pause').html(playerBarPlayButton);
+        currentSoundFile.pause();
       }
     }
  };
@@ -159,10 +159,10 @@ var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
     var percentageString = offsetXPercent + '%';
     $seekBar.find('.fill').width(percentageString);
     $seekBar.find('.thumb').css({left: percentageString});
- };
+};
 
 var setupSeekBars = function() {
-  //*** find all elements with a class of seek-bar withing the class of player-bar ***//
+  //*** find all elements with a class of seek-bar within the class of player-bar ***//
   var $seekBars = $('.player-bar .seek-bar');
  
   $seekBars.click(function(event) {
@@ -211,7 +211,7 @@ var setCurrentTimeInPlayerBar = function(currentTime) {
   $currentTime.text(currentTime);
 };
 
-var setTotalTimeInPlayerBar = function(totalTime) {
+var setTotalTimeInPlayerBar = function(totalTime){
   //*** set text of .total-time class to the length of the song
   var $totalTime = $('.total-time');
   $totalTime.text(totalTime);
@@ -219,10 +219,12 @@ var setTotalTimeInPlayerBar = function(totalTime) {
 };
 
 var filterTimeCode = function (timeInSeconds) {
-  //*** use parseFloat() to get seconds in number form ***//
+  var wholeSecs = parseFloat(timeInSeconds);
+  var wholeMins = Math.floor(wholeSecs/60);
+  var remainder = Math.floor(wholeSecs%60);
 
-  //*** store vars for whole mins and seconds ***//
-  //*** return time in X:XX format ***//
+  return wholeMins + ":" + remainder;
+  
 };
 
 var trackIndex = function(album, song) {
