@@ -205,13 +205,13 @@ var setupSeekBars = function() {
      });
 };
 
-var setCurrentTimeInPlayerBar = function(currentTime) {
+var setCurrentTimeInPlayerBar = function(currentTime){
   //*** set the text of .current-time class to current time in the song ***//
   var $currentTime = $('.current-time');
   $currentTime.text(currentTime);
 };
 
-var setTotalTimeInPlayerBar = function(totalTime){
+var setTotalTimeInPlayerBar = function(totalTime) {
   //*** set text of .total-time class to the length of the song
   var $totalTime = $('.total-time');
   $totalTime.text(totalTime);
@@ -219,11 +219,17 @@ var setTotalTimeInPlayerBar = function(totalTime){
 };
 
 var filterTimeCode = function (timeInSeconds) {
-  var wholeSecs = parseFloat(timeInSeconds);
+  var seconds = Number.parseFloat(timeInSeconds);
+  var wholeSecs = Math.floor(seconds);
   var wholeMins = Math.floor(wholeSecs/60);
   var remainder = Math.floor(wholeSecs%60);
-
-  return wholeMins + ":" + remainder;
+  var output = wholeMins + ':'
+    if (remainder < 10) {
+      output += '0';
+    }
+  
+  output += remainder;
+  return output;
   
 };
 
